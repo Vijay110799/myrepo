@@ -1,0 +1,220 @@
+AWS
+
+AWS S3 storage:
+
+S3 Versioning
+S3 Replication
+Data Encryption
+S3 Bucket Policies
+S3 Storage Classes
+Logging Monitoring
+Hosting Static website
+Snow Family
+Storage gateway (hybrid solution)
+
+AWS S3 (Simple Storage Service) is a cloud-based storage service that allows you tostore, manage, and retrieve large amounts ofdata like files, images, videos, and backup securely and at scale. 
+It provides highly reliable, scalable object storage, making your data accessible fromanywhere, anytime, via the internet.
+
+Store data as objects
+Globally unique name
+
+Region specific
+Each object within a bucket is stored as a key-value pair key is the object’s name (which can contain slashes /, mimicking directory structure) value is the content of the object (the file/data itself).
+
+Maximum Object Size:
+5 TB (Terabytes) is the maximum size for a single object in Amazon S3.
+
+Multipart upload is recommended for objects larger than 5 GB (split the file into smaller parts and upload them separately).
+
+Host Static website:
+S3 is used in many different scenarios. For example:
+Web Hosting: S3 can be used to host static websites by storing HTML, CSS, and JavaScript files.
+
+Data Lake: S3 is commonly used as a data lake, a central repository where you can store both structured and unstructured data for analytics.
+
+Backups and Disaster Recovery: Because of its durability and different storage classes, S3 is a popular choice for storing backups and long-term archives."
+
+S3 Versioning 
+It allows you to keep multiple versions of an object in the same bucket, providing protection against accidental deletions or overwrites. 
+When versioning is enabled, S3 stores every version of an object, allowing you to recover older versions if needed, making it ideal for data safety and backup.
+
+S3 Replication 
+It allows you to automatically copy objects from one S3 bucket to another, which can be 
+  >within the same region (Same-Region Replication - SRR) or 
+  >in different regions (Cross-Region Replication - CRR). 
+
+It's commonly used for compliance, redundancy, and to improve data access performance by maintaining copies closer to your users.
+
+S3 Bucket Policies 
+JSON-based access control policies that you attach directly to an S3 bucket to manage permissions for accessing the bucket and its objects. 
+They allow you to define who can access the data and what actions they can perform, such as read, write, or delete, enabling fine-grained control over the security of your data stored in S3.
+
+Write or paste your JSON policy in the Bucket Policy editor.
+You can use AWS’s Policy Generator to create a custom policy, or you can manually write the policy in JSON format.
+  >GetObject: Used to retrieve or download files from an S3 bucket.
+  >PutObject: Used to upload or add files into an S3 bucket.
+
+S3 Bucket Lifecycle
+You can use lifecycle policies to control the movement of objects between different storage classes or delete them entirely, based on specific conditions like age or inactivity.
+
+There are two main types of actions that you can define in a lifecycle policy:
+
+ >>Transition Actions: This action is used to move objects to a different storage class. You can move objects to cheaper storage classes as they age and are less frequently accessed. 
+    For instance:
+      >Move objects from S3 Standard to S3 Standard-IA (Infrequent Access) after 30 days.
+      >Move objects from S3 Standard-IA to S3 Glacier after 90 days.
+      >Move objects to S3 Glacier Deep Archive for long-term retention after a specific period.
+
+ >>Expiration Actions: This action is used to delete objects after a specified period. You can set rules to permanently delete objects when they are no longer needed, such as:
+    >Delete objects after 365 days.
+    >Delete old versions of objects (when versioning is enabled) after a certain period.
+
+S3 Snow Family
+The S3 Snow Family is a group of physical devices offered by AWS to help move large amounts of data to the cloud when using the internet isn’t practical. 
+These devices are used when there's too much data to upload over a regular connection or when dealing with remote areas without good internet.
+
+The Snow Family includes:
+>AWS Snowcone: A small, portable device for a few terabytes of data.
+>AWS Snowball: A larger device for moving petabytes of data and can also be used for edge computing.
+>AWS Snowmobile: A massive truck-sized container used for exabyte-scale data transfers, typically used by big companies moving entire data centers.
+
+These devices help you transfer data quickly, securely, and cost-effectively to AWS, especially when internet speed or reliability is an issue.
+
+Amazon S3 Storage Gateway
+It is a hybrid cloud storage service that connects on-premises environments to cloud storage in Amazon S3. It helps extend your local storage to the cloud by acting as a bridge.
+
+-----------------------------------------------------------------------
+AWS RDS (Relational Database Service)
+
+What is AWS RDS?
+AWS RDS as a managed database service that simplifies database setup, operation, and scaling.
+Purpose: handling administrative tasks like backups,patching, monitoring, and scaling.
+
+RDS Instance
+Create a RDS MySQL instance
+Use Free Tier
+Username will be 'admin' and you can set password (you can't use special character)
+Keep the Public access to True to access it from Local or remote server
+Create a security group (and allow 3306 from everywhere)
+After creating, you can find Endpoint (hostname) to connect to this DB.
+
+EC2 Instance
+sudo yum install -y docker
+sudo service docker start
+sudo usermod -aG docker ec2-user
+sudo docker pull philippaul/node-mysql-app:02
+
+docker run --rm -p 80:3000 
+-e DB_HOST="your-db-hostname" 
+-e DB_USER="your-db-username" 
+-e DB_PASSWORD="your-db-password" 
+-d philippaul/node-mysql-app:02
+
+docker run -it --rm mysql:8.0 mysql -h db.example.com -u admin -p
+
+Aurora offers:
+Up to 5x the throughput of MySQL Community Edition & 3x of PostGres
+Up to 128 TB of autoscaling SSD storage
+Six-way replication across three Availability Zones
+Up to 15 read replicas with replica lag under 10-ms
+Automatic monitoring with failover
+
+Benefits of Using RDS:
+High availability and fault tolerance.
+Vertical and Horizontal Scaling
+Automated backups and recovery.
+Read replicas for improved read performance
+Multi AZ setup for DR (Disaster Recovery)
+Cost-effectiveness.
+
+Common Use Cases for RDS:
+Web Applications: Relational databases are ideal for web apps requiring structured data.
+E-commerce Platforms: For handling inventory, customer data, and order transactions.
+Business Applications: ERP, CRM, and financial applications with strong data integrity needs.
+
+---------------------------------------------------------------
+Amazon Dynamo DB
+
+A fast and flexible NoSQL database service for any scale.
+It is a fully managed key-value and document database that delivers signle digit millisecond performance at any scale.
+
+What is NoSQL?
+NoSQL is a type of database designed to store and manage data in flexible, non-tabular formats, making it ideal for handling large volumes of unstructured data.
+
+DynamoDB stores data as items in tables, with each item represented as a JSON-like document consisting of key-value pairs.
+
+DynamoDB also offers a free tier that provides 25 GB of storage. 
+The free tier also includes 25 provisioned Write /Read Capacity Units (WCU, RCU) which is enough to handle 200 M requests per month
+
+Docker based Node App with Dynamodb
+
+DynamoDB
+Create a table ‘Contacts’ with primary key as ‘id’ (Type String)
+
+EC2 Instance
+sudo yum install -y docker
+sudo service docker start
+sudo usermod -aG docker ec2-user
+sudo docker pull philippaul/node-dynamodb-demo
+
+IAM Access Keys
+Create Access and Security Keys for your app to connect with Dynamodb
+
+docker run --rm -d -p 80:3000 --name node-dynamo-app -e
+AWS_REGION=your-region -e AWS_ACCESS_KEY_ID=your-access-key -
+e AWS_SECRET_ACCESS_KEY=your-secret-key philippaul/node-
+dynamodb-demo
+
+Serverless: No need for server provisioning, software installation, maintenance, or patching.
+Automatic Scaling: Instantly scales up or down based on demand, with no manual adjustments needed.
+Zero Downtime: Provides continuous availability without maintenance windows.
+On-Demand Pricing: Pay only for the read/write requests used, ideal for fluctuating workloads.
+Idle Cost Savings: Scales down to zero during inactivity, so there’s no cost when tables have no traffic.
+
+Its flexible data model and reliable performance make DynamoDB a great fit for mobile, web, gaming, advertising technology, Internet of Things, and other applications.
+
+DynamoDB Accelerator - DAX 
+Fully Managed in-memory cache for DynamoDB 
+DAX offers microsecond latency achieving up to a 10x performance over standard DynamoDB queries.
+High Availability and Scalability: can be deployed in multiple AZs
+DAX is only used for and is integrated with DynamoDB, while ElastiCache can be used for other databases.
+
+------------------------------------------------------------
+AWS Lambda
+AWS Lambda is a serverless computing service that lets you run code in response to events without managing servers. 
+You just upload your code, and AWS automatically handles the rest, scaling as needed and only charging for the time your code runs.
+
+When to use Lambda?
+>"Image Processing: Let’s say users upload images to your app. You can set up Lambda to automatically resize, compress, or even apply filters to each image as it’s uploaded."
+>"Data Transformation: If you need to clean up or process data before storing it in a database, a Lambda function can handle that transformation automatically."
+>"Real-Time Notifications: If an event happens—like a new user signing up—you can use Lambda to trigger an email, SMS, or other notifications instantly."
+
+Event-Driven Execution:
+Lambda is an event-driven service, meaning that it runs your code in response to certain triggers or events. 
+These events can come from many different AWS services like S3 (file uploads), DynamoDB (database changes), API Gateway (HTTP requests), CloudWatch (scheduled events), etc.
+
+Automatic Scaling:
+AWS Lambda automatically scales the execution of functions in response to the number of incoming requests. 
+If a thousand requests come in at the same time, AWS Lambda will handle them in parallel, making it highly scalable without any configuration.
+
+Pay-as-You-Go:
+Lambda uses a pay-as-you-go pricing model. You are billed based on the number of function executions and the duration of each function's runtime (measured in milliseconds). 
+This is cost-effective as you only pay for the compute time that you use, and there's no charge for idle time.
+
+AWS Lambda language support 
+Node.js (JavaScript) 
+Python 
+Java 
+C# (.NET Core)  
+Ruby 
+Custom Runtime API 
+
+AWS Lamda Limitations
+>Execution Time Limit: Lambda functions can only run for a maximum of 15 minutes. If you need longer-running tasks, Lambda might not be the best choice.
+>Stateless: Lambda functions don’t keep state between invocations, so they’re best for tasks that don’t require long-term memory.
+>Cold Start Delays: If a Lambda function hasn’t run in a while, there’s sometimes a slight delay—called a 'cold start'—when it starts up. This can add a little latency, but AWS provides ways to mitigate it for critical functions.
+
+
+
+
+ 
