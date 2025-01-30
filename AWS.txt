@@ -214,7 +214,157 @@ AWS Lamda Limitations
 >Stateless: Lambda functions don’t keep state between invocations, so they’re best for tasks that don’t require long-term memory.
 >Cold Start Delays: If a Lambda function hasn’t run in a while, there’s sometimes a slight delay—called a 'cold start'—when it starts up. This can add a little latency, but AWS provides ways to mitigate it for critical functions.
 
+--------------------------------------------------------------------
+Virtual Private Cloud (VPC)
+A private, isolated network within the AWS cloud
+where you can launch and manage your resources
+securely.
+
+Why we need VPC?
+To securely isolate and control network
+environments.
+
+CIDR (Classless Inter-Domain Routing) is a method for allocating IP
+addresses and routing Internet Protocol (IP) packets.
+
+What is Subnets?
+A subnet is a smaller, segmented part of a larger
+network that isolates and organizes devices within a
+specific IP address range.
+
+What happens when creating subnet?
+
+CIDR Block Allocation: 
+You specify a range of IP addresses (CIDR block) within the VPC's IP
+address range for the subnet. 
+This determines the pool of IP addresses available for instances in
+the subnet.
+
+Explanation of 10.0.1.0/24
+10.0.1.0 to 10.0.1.255 is the full range.
+The /24 indicates that the first 24 bits are the network portion of the address.
+The remaining 8 bits are available for host addresses within the network.
+
+What is route table?
 
 
 
- 
+Internet Gateway
+An Internet Gateway is a component that allows
+communication between instances in your VPC and the
+internet.
+
+Security Groups: Network firewall rules that
+control inbound and outbound traffic for
+instances.
+
+Network ACLs (Access Control Lists): 
+Optional layer of security for your VPC that acts
+as a firewall for controlling traffic in and out of
+one or more subnets.
+Allow or Deny Rule.
+
+NAT (Network Address Translation) Gateway:
+Enables instances in a private subnet to connect to the internet
+or other AWS services, but prevents the internet from initiating
+connections to those instances.
+
+VPC Peering: A networking connection between
+two VPCs that enables you to route traffic
+between them privately.
+
+VPC Endpoints: Allows you to privately connect
+your VPC to supported AWS services and VPC
+endpoint services powered by AWS PrivateLink.
+
+Bastion Host: A special-purpose instance that
+provides secure access to your instances in
+private subnets.
+
+Elastic IP Addresses: Static IP addresses
+designed for dynamic cloud computing.
+
+VPC Flow Logs: Capture information about the IP
+traffic going to and from network interfaces in
+your VPC.
+
+Direct Connect: Establishes a dedicated network
+connection from your premises to AWS.
+
+Transit Gateway: A network transit hub that you
+can use to interconnect your VPCs and on-
+premises networks.
+
+AWS Client VPN: Managed VPN service that
+enables secure remote access to AWS resources
+and on-premises networks using OpenVPN-
+based clients. 
+
+-----------------------------------------------------------
+Amazon Route 53
+AWS Route 53 is a scalable DNS service
+for domain registration, traffic routing,
+and health checking capabilities.
+
+What is DNS?
+DNS, or Domain Name System, is the internet service that translates human-friendly domain names like www.example.com into machine-readable IP addresses.
+Default port for DNS (Domain Name System)
+service is: 53
+
+Userdata script to install and run Apache Webserver
+#!/bin/bash
+sudo yum update -y
+# Install Apache web server (httpd)
+sudo yum install -y httpd
+sudo systemctl start httpd
+sudo systemctl enable httpd
+
+# Create a simple HTML file to verify the web server is running
+echo "<html><h1>Welcome to Apache Web Server on Amazon Linux!</h1></html>" >
+/var/www/html/index.html
+
+How Route 53 works?
+Domain Name Registration: Register a domain and point it to AWS Route 53.
+Hosted Zone Creation: Create a hosted zone to manage DNS records.
+DNS Records: Add records (e.g., A, CNAME, MX) to route traffic to various
+endpoints.
+Routing Policies: Set up routing policies based on your needs, such as
+latency-based or failover routing.
+Health Checks: Configure health checks to monitor endpoints and trigger
+failover when needed.
+
+Types of Records Supported by AWS Route 53
+A Record (IPv4): Maps a domain name to an IPv4 address.
+Example: www.google.com => 12.34.56.78
+AAAA Record (IPv6): Maps a domain name to an IPv6 address.
+Example: www.example.com => 2001:db8::1
+CNAME Record: Maps a domain name to another domain name (alias).
+Example: blog.example.com => www.example.com
+MX Record: Directs mail to an email server.
+Example: example.com => mail.example.com (Priority 10)
+TXT Record: Provides text information to external sources for
+verification or configuration.
+Example: example.com => "v=spf1 include:_spf.example.com ~all"
+NS Record: Specifies the authoritative name servers for the domain.
+Example: example.com => ns-123.awsdns-45.org
+SRV Record: Specifies the location of services.
+Example: _sip._tcp.example.com => 10 60 5060
+sipserver.example.com
+
+Usecases
+Hosting Websites: Manage domain names and route traffic to
+web applications.
+Load Balancing: Distribute traffic across multiple endpoints
+using weighted or latency-based routing.
+Disaster Recovery: Use health checks and failover routing for
+high availability.
+Multi-Region Deployments: Route traffic to the closest region
+for low latency.
+
+Summary of Billing:
+Billable Components include hosted zones, DNS queries,
+health checks, domain registration, and traffic policies.
+Costs vary based on usage and the type of configuration
+(e.g., standard vs. advanced routing policies).
+Free Tier: Route 53 does not include a free tier, so charges
+start as soon as you use its services.
