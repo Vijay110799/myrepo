@@ -1,0 +1,55 @@
+DNS: domain name system
+TLD: Top level domain
+
+Domain Name System (DNS) Service: Route 53 acts as a DNS service, translating domain names (like www.example.com) into IP addresses that computers use to connect to each other. This is similar to how a phone book matches names to phone numbers.
+
+Traffic Routing: Route 53 can route internet traffic to different servers based on rules you set. For example, you can direct users to the nearest server for faster load times or balance the load across multiple servers to ensure your website or application remains available and performs well.
+
+Health Checks and Monitoring: Route 53 can monitor the health of your resources (like web servers) and automatically route traffic away from unhealthy resources to healthy ones. This helps ensure high availability and reliability for your applications.
+
+Domain Registration: You can also register domain names directly through Route 53, making it a one-stop shop for managing your domains and DNS settings.
+
+Scalability and Reliability: Being part of AWS, Route 53 benefits from AWS's global infrastructure, ensuring it can handle large volumes of traffic and provide high availability.
+
+1. buy an domain name from route53 registry
+
+2. create a record on hosted zone and assign an public ip (can be of public instance) to the domain name to access the website with the domain name.(Use 'A' record to host ipv4 for ipv6 use 'AAAA' record)
+
+3. Can make an sub domain main. Charges are applicable to main domain name only not for sub domain name.
+   eg: example.com. is root domain name
+       example.com is .com domain name
+       example. is main domain name
+       abc.example here abc is sub domain name.
+  host an static website of the same name which we want for subdomain name in S3 bucket and use that url and create an new record on hosted zone to access the subdomain name on route53. (can use CNMAE record to use the static page url).
+
+4. For root record or for root domain you can not use 'CNAME' record, so if you don't have ip address for root domain you can use 'ALIAS' for the url if the website is hosted on AWS resources only. Such as S3 bucket, load balancer, VPC etc. It is free of cost as we use AWS resources.
+
+5. TXT record is used to verify the original owner of the domain or domain name.
+
+6. Health Checks: monitor if the servers in different region are healthy or not/ are up or down.
+
+7. Parent health check: We can check multiple servers health in an single health check and can use 'AND' / 'OR' condition to test them. 
+
+8. Simple routing policy: In this policy we can use multiple IP's for an specific sub domain name, here health check policy can't be used.
+
+9. Weighted routing policy: It distributes the traffic on servers which we have selected based on percentage criteria we set to be distributed on each server.
+
+10. Geolocation routing policy: We can configure our ip's based on our location. Assign an ip to an specific location and when ever we access from that location it will redirect it to that location. (for exp. our application different language French English german we can assign an ip for every location to access the website in that particular language).
+
+11. Latency based routing policy: To reduce the communication latency between the datacenter and servers we use this policy. (for exp. there are 2 data center 1)Mumbai 2) USA we can set this policy if some one access from India it will go to Mumbai region, and similar with another.)
+
+12. Failover routing policy: In this policy we can set two servers primary and secondary, when the primary servers gets down/unhealthy due to any reason it will automatically redirect traffic to secondary server. And as primary becomes healthy it will again redirect traffic towards primary server.
+
+13. Multi-value Answer routing policy: In this policy we use multiple IP's similar to simple routing policy, but the difference is we can set an health check policy to each and every particular ip.
+
+14. IP based routing policy: We can assign an DNS value to an specific CIDR location, for which first we have to create an CIDR collection. And when you hit any specific ip from that CIDR collection it will resolve the DNS value which we have assigned to it.
+
+15. Traffic policy: It helps you to manage how DNS queries are routed to your resources.
+>Create a Traffic Policy: You design a set of rules that define how traffic should be routed. This can include health checks to ensure your endpoints are working1.
+>Specify Values: When creating the policy, you specify details like the policy name, DNS type, and the endpoints it should connect to1.
+>Apply the Policy: You can apply this policy to one or more DNS records in your hosted zones1.
+This allows you to control and optimize the flow of internet traffic to your applications based on various criteria, such as geographic location or endpoint health
+
+16. DNS Firewall: It is present in VPC section, it allows you to block the websites which should not be accessed through your resources or systems.
+
+17. Private hosted zones: It is used to give access to those VPC's or AWS resources which are under an private hosted zone. If you try to access it from other zones or from other resources which does not come under this resources associated it will throw an error.
