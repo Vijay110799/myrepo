@@ -368,3 +368,24 @@ Costs vary based on usage and the type of configuration
 (e.g., standard vs. advanced routing policies).
 Free Tier: Route 53 does not include a free tier, so charges
 start as soon as you use its services.
+
+--------------------------------------------------------------
+ AWS Cloud watch:
+What is cloud watch?
+Amazon CloudWatch is a monitoring and management service from AWS (Amazon Web Services). In simple terms, it helps you keep an eye on your cloud resources and applications. It collects and tracks metrics, monitors log files, sets alarms, and automatically reacts to changes in your AWS environment. Think of it as a tool that ensures your cloud infrastructure is running smoothly and efficiently.
+ 
+Automatic metrics:
+In Amazon CloudWatch, automatic metrics refer to the default metrics that AWS services automatically collect and provide for your resources. These metrics help you monitor the performance and health of your AWS resources without needing to set up anything manually. For example, metrics like CPU utilization, disk I/O, and network traffic for EC2 instances are automatically collected and available in CloudWatch.
+
+Naming convention:
+In Amazon CloudWatch, naming conventions are important for organizing and managing your metrics, logs, and other resources. Here are some key points:
+
+Namespaces: A namespace is a container for CloudWatch metrics. AWS services typically use the naming convention AWS/service. For example, Amazon EC2 uses the namespace AWS/EC21.
+>Metrics: Metrics are uniquely defined by a name, a namespace, and zero or more dimensions. Each metric name should be descriptive and meaningful1.
+>Tags: Tags are custom attribute labels that you or AWS assign to resources. Each resource can have up to 50 tags, with each tag consisting of a key and an optional value. Tag keys and values are case-sensitive and can include letters, numbers, spaces, and certain special characters2.
+>Log Groups and Log Streams: For CloudWatch Logs, log groups and log streams have their own naming conventions. Log group names should be unique within an account and region, and log stream names should be unique within a log group
+
+Detailing metric
+Create custom dashboard
+Creating Alarm and trigger mail
+Installing CloudWatch Agent to monitor more parameters.
